@@ -44,6 +44,7 @@
 
 	print("Hello World!")
 - код для python
+
 	public class HelloWorld : MonoBehaviour
 	{
 	    // Start is called before the first frame update
@@ -58,7 +59,7 @@
 
 	    }
 	}
-код для unity
+-код для unity
 скриншоты с демострацией:https://github.com/GeorgeLapp/DA-in-GameDev-lab1/blob/main/%D0%9E%D1%82%D1%87%D0%B5%D1%82%D1%8B.docx
 
 
