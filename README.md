@@ -46,7 +46,7 @@ print("Hello World!")
 ```
 - код для python
 ```cs
-	public class HelloWorld : MonoBehaviour
+public class HelloWorld : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
