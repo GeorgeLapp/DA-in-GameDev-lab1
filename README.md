@@ -45,6 +45,8 @@
 print("Hello World!")
 ```
 - код для python
+- ![image](https://user-images.githubusercontent.com/32997569/192461241-bacd7675-2b93-4aef-9aae-f814b37eb86c.png)
+
 ```cs
 public class HelloWorld : MonoBehaviour
 {
@@ -64,6 +66,8 @@ public class HelloWorld : MonoBehaviour
 ```
 
 -код для unity
+![image](https://user-images.githubusercontent.com/32997569/192461340-39a907b9-2956-4ba4-a8e0-d64b5c4224a4.png)
+
 
 скриншоты с демострацией:https://github.com/GeorgeLapp/DA-in-GameDev-lab1/blob/main/%D0%9E%D1%82%D1%87%D0%B5%D1%82%D1%8B.docx
 
@@ -71,58 +75,48 @@ public class HelloWorld : MonoBehaviour
 ## Задание 2
 ### Должна ли величина loss стремиться к нулю при изменении исходных данных? Ответьте на вопрос, приведите пример выполнения кода, который подтверждает ваш ответ.
 
-- Перечисленные в этом туториале действия могут быть выполнены запуском на исполнение скрипт-файла, доступного [в репозитории](https://github.com/Den1sovDm1triy/hfss-scripting/blob/main/ScreatingSphereInAEDT.py).
-- Для запуска скрипт-файла откройте Ansys Electronics Desktop. Перейдите во вкладку [Automation] - [Run Script] - [Выберите файл с именем ScreatingSphereInAEDT.py из репозитория].
+Величина loss не должна стремиться к нулю. Величина loss показывает потери для каждого набора данных и при оптимальных настройках коэффициента градиента спуска и количества итераций покажет наименьшие потери. Величина loss может стремиться к нулю если точки из набора данных будут лежать на одном радиус-векторе и настройки коэффициента градиента спуска и количества итераций будут оптимальны. Но для каждного набора данных предел loss свой.
+Все эти выводы можно сделать из функции loss_function из которой мы и получаем величину loss.
 
 ```py
-
-import ScriptEnv
-ScriptEnv.Initialize("Ansoft.ElectronicsDesktop")
-oDesktop.RestoreWindow()
-oProject = oDesktop.NewProject()
-oProject.Rename("C:/Users/denisov.dv/Documents/Ansoft/SphereDIffraction.aedt", True)
-oProject.InsertDesign("HFSS", "HFSSDesign1", "HFSS Terminal Network", "")
-oDesign = oProject.SetActiveDesign("HFSSDesign1")
-oEditor = oDesign.SetActiveEditor("3D Modeler")
-oEditor.CreateSphere(
-	[
-		"NAME:SphereParameters",
-		"XCenter:="		, "0mm",
-		"YCenter:="		, "0mm",
-		"ZCenter:="		, "0mm",
-		"Radius:="		, "1.0770329614269mm"
-	], 
-)
-
+# Изначальный набор точек при котором предел loss около, 180
+x = [3,21,22,34,54,34,55,67,89,99]
+x = np.array(x)
+y = [2,22,24,65,79,82,55,130,150,199]
+y = np.array(y)
+# для следующего набора данных loss будет стремиться к нулю (учитывая что остальные данные оптимальны)
+x = [3,22,24,34,54,82,55,130,150,199]
+x = np.array(x)
+y = [3,22,24,34,54,82,55,130,150,199]
+y = np.array(y)
+def loss_function(a,b,x,y):
+  num=len(x)
+  prediction = model(a,b,x)
+  return(0.5/num)*(np.square(prediction-y)).sum()
 ```
-
+![image](https://user-images.githubusercontent.com/32997569/192457176-fe48beb0-7cec-4fd3-9337-0058a32b2f26.png)
+полный код доступен  [в репозитории](https://github.com/GeorgeLapp/DA-in-GameDev-lab1/blob/main/Script.py).
 ## Задание 3
 ### Какова роль параметра Lr? Ответьте на вопрос, приведите пример выполнения кода, который подтверждает ваш ответ. В качестве эксперимента можете изменить значение параметра.
-
-- Перечисленные в этом туториале действия могут быть выполнены запуском на исполнение скрипт-файла, доступного [в репозитории](https://github.com/Den1sovDm1triy/hfss-scripting/blob/main/ScreatingSphereInAEDT.py).
-- Для запуска скрипт-файла откройте Ansys Electronics Desktop. Перейдите во вкладку [Automation] - [Run Script] - [Выберите файл с именем ScreatingSphereInAEDT.py из репозитория].
-
+Lr- коэффициент градиета спуска, этот вывод можно сделать из следующего участка кода:
 ```py
-
-import ScriptEnv
-ScriptEnv.Initialize("Ansoft.ElectronicsDesktop")
-oDesktop.RestoreWindow()
-oProject = oDesktop.NewProject()
-oProject.Rename("C:/Users/denisov.dv/Documents/Ansoft/SphereDIffraction.aedt", True)
-oProject.InsertDesign("HFSS", "HFSSDesign1", "HFSS Terminal Network", "")
-oDesign = oProject.SetActiveDesign("HFSSDesign1")
-oEditor = oDesign.SetActiveEditor("3D Modeler")
-oEditor.CreateSphere(
-	[
-		"NAME:SphereParameters",
-		"XCenter:="		, "0mm",
-		"YCenter:="		, "0mm",
-		"ZCenter:="		, "0mm",
-		"Radius:="		, "1.0770329614269mm"
-	], 
-)
+def optimize(a,b,x,y):
+  num=len(x)
+  prediction = model(a,b,x)
+  da=(1.0/num)*((prediction -y)*x).sum()
+  db=(1.0/num)*((prediction -y).sum())
+  a=a-Lr*da
+  b = b-Lr*db
+  return a,b
 
 ```
+ Lr - изменение велечин стремящееся к нулю, линейная часть приращения функции или дифференциал. 
+ Если мы будем учеличивать Lr то заметим, что фунция быстрее возрастает по оси oy:
+ при Lr 0,000001  и 5 итерациях:
+ ![image](https://user-images.githubusercontent.com/32997569/192460444-f82a5e09-0623-47c7-8584-3607f06e008a.png)
+ при Lr 0,0001  и 5 итерациях:
+![image](https://user-images.githubusercontent.com/32997569/192461745-61995cb1-5aa4-47ec-961c-7c900578ae6c.png)
+
 
 ## Выводы
 
