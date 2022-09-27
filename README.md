@@ -38,9 +38,7 @@
 Ознакомиться с основными операторами зыка Python на примере реализации линейной регрессии.
 
 ## Задание 1
-### Пошагово выполнить каждый пункт раздела "ход работы" с описанием и примерами реализации задач
-Ход работы:
-Вывести "Hello World!" на unity и на python.
+### Вывести "Hello World!" на unity и на python.
 ```py
 print("Hello World!")
 ```
@@ -66,10 +64,9 @@ public class HelloWorld : MonoBehaviour
 ```
 
 -код для unity
+
 ![image](https://user-images.githubusercontent.com/32997569/192461340-39a907b9-2956-4ba4-a8e0-d64b5c4224a4.png)
 
-
-скриншоты с демострацией:https://github.com/GeorgeLapp/DA-in-GameDev-lab1/blob/main/%D0%9E%D1%82%D1%87%D0%B5%D1%82%D1%8B.docx
 
 
 ## Задание 2
@@ -113,23 +110,17 @@ def optimize(a,b,x,y):
  Lr - изменение велечин стремящееся к нулю, линейная часть приращения функции или дифференциал. 
  Если мы будем учеличивать Lr то заметим, что фунция быстрее возрастает по оси oy:
  при Lr 0,000001  и 5 итерациях:
+ 
  ![image](https://user-images.githubusercontent.com/32997569/192460444-f82a5e09-0623-47c7-8584-3607f06e008a.png)
+ 
  при Lr 0,0001  и 5 итерациях:
+ 
 ![image](https://user-images.githubusercontent.com/32997569/192461745-61995cb1-5aa4-47ec-961c-7c900578ae6c.png)
 
 
 ## Выводы
 
-Абзац умных слов о том, что было сделано и что было узнано.
-
-| Plugin | README |
-| ------ | ------ |
-| Dropbox | [plugins/dropbox/README.md][PlDb] |
-| GitHub | [plugins/github/README.md][PlGh] |
-| Google Drive | [plugins/googledrive/README.md][PlGd] |
-| OneDrive | [plugins/onedrive/README.md][PlOd] |
-| Medium | [plugins/medium/README.md][PlMe] |
-| Google Analytics | [plugins/googleanalytics/README.md][PlGa] |
+П
 
 ## Powered by
 
